@@ -7,12 +7,25 @@ const router = createRouter({
       path: '/',
       name: 'chat',
       component: () => import('@/views/ChatView.vue'),
+      props: { mode: null },
     },
     {
-      path: '/:mode',
-      name: 'chat-with-mode',
+      path: '/rag',
+      name: 'chat-rag',
       component: () => import('@/views/ChatView.vue'),
-      props: (route) => ({ mode: String(route.params.mode) }),
+      props: { mode: 'rag' },
+    },
+    {
+      path: '/mcp',
+      name: 'chat-mcp',
+      component: () => import('@/views/ChatView.vue'),
+      props: { mode: 'mcp' },
+    },
+    {
+      path: '/agent',
+      name: 'chat-agent',
+      component: () => import('@/views/ChatView.vue'),
+      props: { mode: 'agent' },
     },
     {
       path: '/view-ad/:id',

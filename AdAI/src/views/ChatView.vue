@@ -3,12 +3,14 @@ import { nextTick, ref } from 'vue'
 import ChatInput from '@/components/chat/ChatInput.vue'
 import MessageList from '@/components/chat/MessageList.vue'
 import type { ChatMessage } from '@/types/chat'
+import { chatApi, ChatApiError } from '@/api/chat'
 
-const props = defineProps<{ mode: string }>()
+const props = defineProps<{ mode: 'rag' | 'mcp' | 'agent' | null }>()
 
 const draft = ref('')
 const messages = ref<ChatMessage[]>([])
 const isSending = ref(false)
+const error = ref<string | null>(null)
 
 const scrollEl = ref<HTMLDivElement | null>(null)
 
@@ -22,11 +24,12 @@ async function sendMessage(): Promise<void> {
   const content = draft.value.trim()
   if (!content || isSending.value) return
 
+  // Clear any previous errors
+  error.value = null
+
   const userMessage: ChatMessage = {
-    id: crypto.randomUUID(),
     role: 'user',
-    content,
-    createdAt: Date.now(),
+    parts: [content],
   }
 
   messages.value = [...messages.value, userMessage]
@@ -35,17 +38,50 @@ async function sendMessage(): Promise<void> {
   await nextTick()
   scrollToBottom()
 
-  // Placeholder assistant response (swap with your backend call)
   isSending.value = true
   try {
-    await new Promise((r) => setTimeout(r, 250))
-    const assistantMessage: ChatMessage = {
-      id: crypto.randomUUID(),
+    // Get message history (excluding the current user message)
+    const history = messages.value.slice(0, -1)
+    
+    // Send the request based on the mode
+    const response = await chatApi.sendChatMessage(content, history, props.mode)
+    
+    const modelResponseMessage: ChatMessage = {
       role: 'assistant',
-      content: `Got it: “${content}”`,
-      createdAt: Date.now(),
+      parts: [response.response],
     }
-    messages.value = [...messages.value, assistantMessage]
+
+    messages.value = [...messages.value, modelResponseMessage]
+  } catch (err) {
+    // Handle errors gracefully
+    console.error('Chat error:', err)
+    
+    if (err instanceof ChatApiError) {
+      error.value = err.message
+      
+      // Add error message to chat
+      const errorMessage: ChatMessage = {
+        role: 'assistant',
+        parts: [`❌ Error: ${err.message}`],
+      }
+      
+      if (err.isTimeout) {
+        errorMessage.parts[0] += '\n\nThe request timed out. The server may be overloaded or the request is taking too long.'
+      } else if (err.isNetworkError) {
+        errorMessage.parts[0] += '\n\nPlease ensure:\n• The backend server is running on http://localhost:8000\n• Your network connection is stable'
+      }
+      
+      messages.value = [...messages.value, errorMessage]
+    } else {
+      // Handle non-ChatApiError errors
+      const errorMsg = err instanceof Error ? err.message : String(err)
+      error.value = errorMsg
+      const errorMessage: ChatMessage = {
+        role: 'assistant',
+        parts: [`❌ Error: ${errorMsg}`],
+      }
+      messages.value = [...messages.value, errorMessage]
+    }
   } finally {
     isSending.value = false
   }
@@ -58,8 +94,7 @@ async function sendMessage(): Promise<void> {
 <template>
   <div class="page">
     <header class="header">
-      <h1 class="title">Conversational AdAI playground</h1>
-      <h2>{{ props.mode }}</h2>
+      <h1 class="title">Conversational AdAI {{ props.mode }} playground</h1>
     </header>
 
     <div ref="scrollEl" class="scroll">
