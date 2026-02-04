@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { ChatMessage } from '@/types/chat'
 import { renderMarkdown } from '@/utils/markdown'
+import LoadingIndicator from './LoadingIndicator.vue'
 
 defineProps<{
-  messages: ChatMessage[]
+  messages: ChatMessage[],
+  isModelGenerating: boolean,
 }>()
 </script>
 
@@ -20,8 +22,13 @@ defineProps<{
         <div v-else class="text markdown" v-html="renderMarkdown(m.parts.join(''))"></div>
       </div>
     </div>
+    <div v-if="isModelGenerating" class="row" data-role="assistant">
+      <div class="bubble">
+        <div class="meta">Assistant</div>
+        <LoadingIndicator />
+      </div>
+    </div>
   </div>
-  <code>{{ messages }}</code>
 </template>
 
 <style scoped>

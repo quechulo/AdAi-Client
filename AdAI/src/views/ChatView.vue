@@ -9,7 +9,7 @@ const props = defineProps<{ mode: 'rag' | 'mcp' | 'agent' | null }>()
 
 const draft = ref('')
 const messages = ref<ChatMessage[]>([])
-const isSending = ref(false)
+const isModelGenerating = ref(false)
 const error = ref<string | null>(null)
 
 const scrollEl = ref<HTMLDivElement | null>(null)
@@ -22,7 +22,7 @@ function scrollToBottom(): void {
 
 async function sendMessage(): Promise<void> {
   const content = draft.value.trim()
-  if (!content || isSending.value) return
+  if (!content || isModelGenerating.value) return
 
   // Clear any previous errors
   error.value = null
@@ -38,7 +38,7 @@ async function sendMessage(): Promise<void> {
   await nextTick()
   scrollToBottom()
 
-  isSending.value = true
+  isModelGenerating.value = true
   try {
     // Get message history (excluding the current user message)
     const history = messages.value.slice(0, -1)
@@ -83,7 +83,7 @@ async function sendMessage(): Promise<void> {
       messages.value = [...messages.value, errorMessage]
     }
   } finally {
-    isSending.value = false
+    isModelGenerating.value = false
   }
 
   await nextTick()
@@ -98,11 +98,11 @@ async function sendMessage(): Promise<void> {
     </header>
 
     <div ref="scrollEl" class="scroll">
-      <MessageList :messages="messages" />
+      <MessageList :messages="messages" :isModelGenerating="isModelGenerating" />
     </div>
 
     <footer class="composer" aria-label="Message composer">
-      <ChatInput v-model="draft" :disabled="isSending" @send="sendMessage" />
+      <ChatInput v-model="draft" :disabled="isModelGenerating" @send="sendMessage" />
     </footer>
   </div>
 </template>
