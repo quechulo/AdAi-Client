@@ -14,6 +14,8 @@ export interface ChatRequestBody {
 
 export interface ChatResponse {
   response: string
+  generation_time: number
+  used_tokens: number
   sources?: Array<{ content: string; metadata?: Record<string, unknown> }>
 }
 
@@ -211,6 +213,23 @@ class ChatApiService {
     } catch {
       return false
     }
+  }
+
+  // Save chat history
+  async saveChatHistory(
+    history: ChatMessage[],
+    mode: 'rag' | 'mcp' | 'agent' | 'basic',
+    helpful: boolean,
+  ): Promise<{ success: boolean }> {
+    return this.retryRequest(async () => {
+      const response = await this.client.post<{ success: boolean }>('/save-chat-history', {
+        history,
+        mode,
+        helpful,
+        version: 1.0
+      })
+      return response.data
+    })
   }
 }
 
