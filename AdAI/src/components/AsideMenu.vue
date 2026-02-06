@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useChatStore } from '@/stores/chat'
 
 const props = defineProps<{ collapsed: boolean }>()
 const emit = defineEmits<{ (e: 'update:collapsed', value: boolean): void }>()
 
+const chatStore = useChatStore()
+
 const toggleLabel = computed(() => (props.collapsed ? 'Expand menu' : 'Collapse menu'))
+const hasMessages = computed(() => chatStore.messages.length > 0)
 
 function toggle(): void {
   emit('update:collapsed', !props.collapsed)
+}
+
+function handleStartNewChat(): void {
+  chatStore.openNewChatDialog()
 }
 </script>
 
@@ -25,6 +33,11 @@ function toggle(): void {
     </div>
 
     <nav class="nav" aria-label="Main navigation">
+      <div v-if="hasMessages" class="link link-button" @click="handleStartNewChat">
+        <span class="icon" aria-hidden="true">✨</span>
+        <span v-if="!collapsed" class="label">Start new chat</span>
+      </div>
+
       <RouterLink class="link" active-class="active" to="/">
         <span class="icon" aria-hidden="true">💬</span>
         <span v-if="!collapsed" class="label">Chat</span>
@@ -151,6 +164,16 @@ function toggle(): void {
 .link.active {
   background: rgba(59, 130, 246, 0.08);
   border-color: rgba(59, 130, 246, 0.25);
+}
+
+.link-button {
+  cursor: pointer;
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.link-button:hover {
+  background: rgba(139, 92, 246, 0.12);
 }
 
 .icon {
