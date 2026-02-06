@@ -4,6 +4,6 @@ export interface Ad {
   id: AdId
   title: string
   description: string
-  imageUrl: string
+  image_url: string
   keywords: string[]
 }
