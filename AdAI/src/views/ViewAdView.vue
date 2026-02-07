@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watchEffect } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import type { Ad } from '@/types/ad'
-import { fetchAdById } from '@/api/ads'
+import { fetchAdById } from '@/api/ad'
 
 const props = defineProps<{ id: string }>()
 
@@ -13,7 +13,7 @@ let controller: AbortController | null = null
 
 const keywords = computed(() => ad.value?.keywords ?? [])
 
-watchEffect(async (onCleanup) => {
+watch(() => props.id, async (id, _, onCleanup) => {
   ad.value = null
   error.value = null
   isLoading.value = true
@@ -25,13 +25,13 @@ watchEffect(async (onCleanup) => {
   onCleanup(() => current.abort())
 
   try {
-    ad.value = await fetchAdById(props.id, current.signal)
+    ad.value = await fetchAdById(id, current.signal)
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to load ad'
   } finally {
     isLoading.value = false
   }
-})
+}, { immediate: true })
 
 onBeforeUnmount(() => {
   controller?.abort()
@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
       <template v-else>
         <div class="grid">
           <div class="media">
-            <img class="img" :src="ad.imageUrl" :alt="ad.title" loading="lazy" />
+            <img class="img" :src="ad.image_url" :alt="ad.title" loading="lazy" />
           </div>
 
           <div class="content">

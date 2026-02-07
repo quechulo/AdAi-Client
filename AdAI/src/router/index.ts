@@ -28,7 +28,7 @@ const router = createRouter({
       props: { mode: 'agent' },
     },
     {
-      path: '/view-ad/:id',
+      path: '/:id',
       name: 'view-ad',
       component: () => import('@/views/ViewAdView.vue'),
       props: (route) => ({ id: String(route.params.id) }),
