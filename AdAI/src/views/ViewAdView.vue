@@ -8,6 +8,8 @@ const props = defineProps<{ id: string }>()
 const ad = ref<Ad | null>(null)
 const isLoading = ref(false)
 const error = ref<string | null>(null)
+const imageLoading = ref(false)
+const imageError = ref(false)
 
 let controller: AbortController | null = null
 
@@ -17,6 +19,8 @@ watch(() => props.id, async (id, _, onCleanup) => {
   ad.value = null
   error.value = null
   isLoading.value = true
+  imageLoading.value = true
+  imageError.value = false
 
   controller?.abort()
   controller = new AbortController()
@@ -49,14 +53,26 @@ onBeforeUnmount(() => {
       <div v-if="isLoading" class="state">Loading…</div>
       <div v-else-if="error" class="state error">
         {{ error }}
-        <div class="hint">Expected endpoint: <span class="mono">/api/ads/{{ id }}</span></div>
       </div>
       <div v-else-if="!ad" class="state">No data.</div>
 
       <template v-else>
         <div class="grid">
           <div class="media">
-            <img class="img" :src="ad.image_url" :alt="ad.title" loading="lazy" />
+            <div class="mediaWrapper">
+              <img 
+                class="img" 
+                :src="ad.image_url" 
+                :alt="ad.title" 
+                loading="lazy"
+                @load="imageLoading = false"
+                @error="imageError = true; imageLoading = false"
+              />
+              <div v-if="imageLoading" class="skeleton"></div>
+              <div v-if="imageError && !imageLoading" class="imageError">
+                <span>Failed to load image</span>
+              </div>
+            </div>
           </div>
 
           <div class="content">
@@ -148,12 +164,70 @@ onBeforeUnmount(() => {
   }
 }
 
+.mediaWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  overflow: hidden;
+}
+
 .img {
   width: 100%;
   height: 100%;
   max-height: 360px;
   object-fit: cover;
   display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 24, 39, 0.06);
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(17, 24, 39, 0) 0%,
+    rgba(17, 24, 39, 0.08) 50%,
+    rgba(17, 24, 39, 0) 100%
+  );
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.imageError {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 24, 39, 0.03);
+  color: rgba(17, 24, 39, 0.5);
+  font-size: 13px;
 }
 
 .content {
