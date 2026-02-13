@@ -29,7 +29,6 @@ defineProps<{
       </div>
     </div>
   </div>
-  <code>{{ messages }}</code>
 </template>
 
 <style scoped>
