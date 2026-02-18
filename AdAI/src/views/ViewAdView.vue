@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import type { Ad } from '@/types/ad'
 import { fetchAdById } from '@/api/ad'
+import { fetchPexelsImage } from '@/api/pexels'
 
 const props = defineProps<{ id: string }>()
 
@@ -10,6 +11,7 @@ const isLoading = ref(false)
 const error = ref<string | null>(null)
 const imageLoading = ref(false)
 const imageError = ref(false)
+const imageUrl = ref<string | null>(null)
 
 let controller: AbortController | null = null
 
@@ -21,6 +23,7 @@ watch(() => props.id, async (id, _, onCleanup) => {
   isLoading.value = true
   imageLoading.value = true
   imageError.value = false
+  imageUrl.value = null
 
   controller?.abort()
   controller = new AbortController()
@@ -30,6 +33,12 @@ watch(() => props.id, async (id, _, onCleanup) => {
 
   try {
     ad.value = await fetchAdById(id, current.signal)
+    
+    // Fetch Pexels image based on keywords after ad is loaded
+    if (ad.value) {
+      const pexelsUrl = await fetchPexelsImage(ad.value.keywords, current.signal)
+      imageUrl.value = pexelsUrl || ad.value.image_url
+    }
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to load ad'
   } finally {
@@ -62,7 +71,7 @@ onBeforeUnmount(() => {
             <div class="mediaWrapper">
               <img 
                 class="img" 
-                :src="ad.image_url" 
+                :src="imageUrl || ad.image_url" 
                 :alt="ad.title" 
                 loading="lazy"
                 @load="imageLoading = false"
@@ -143,7 +152,7 @@ onBeforeUnmount(() => {
 
 .grid {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: 1.5fr 1fr;
 }
 
 @media (max-width: 900px) {
@@ -167,14 +176,12 @@ onBeforeUnmount(() => {
 .mediaWrapper {
   position: relative;
   width: 100%;
-  min-height: 360px;
   overflow: hidden;
 }
 
 .img {
   width: 100%;
   height: 100%;
-  max-height: 360px;
   object-fit: cover;
   display: block;
   opacity: 1;
