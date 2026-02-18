@@ -31,22 +31,14 @@ interface PexelsSearchResponse {
   next_page?: string
 }
 
-/**
- * Fetches an image URL from Pexels API based on keywords.
- * @param keywords - Array of keywords to search for
- * @param signal - Optional AbortSignal for request cancellation
- * @returns Image URL from Pexels, or null if not found or on error
- */
 export async function fetchPexelsImage(
   keywords: string[],
   signal?: AbortSignal
 ): Promise<string | null> {
-  // Early return if no keywords provided
   if (!keywords || keywords.length === 0) {
     return null
   }
 
-  // Format keywords as comma-separated query string
   const query = keywords.join(', ')
 
   try {
@@ -81,10 +73,7 @@ export async function fetchPexelsImage(
 
     return null
   } catch (error) {
-    // Return null on any error (network, 404, invalid response, etc.)
-    // This allows graceful fallback to ad.image_url
     if (axios.isCancel(error)) {
-      // Request was cancelled, this is expected behavior
       return null
     }
     
