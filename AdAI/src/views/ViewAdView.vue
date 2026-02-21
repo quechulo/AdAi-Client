@@ -104,6 +104,8 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .page {
+  height: 100%;
+  overflow: auto;
   padding: 20px;
 }
 
@@ -176,6 +178,7 @@ onBeforeUnmount(() => {
 .mediaWrapper {
   position: relative;
   width: 100%;
+  max-height: 85vh;
   overflow: hidden;
 }
 
