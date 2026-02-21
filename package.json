@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "markdown-it-link-attributes": "^4.0.1"
+  }
+}
