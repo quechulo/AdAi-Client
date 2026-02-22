@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+import markdownItLinkAttributes from 'markdown-it-link-attributes'
 import DOMPurify from 'dompurify'
 
 // Configure markdown-it with basic CommonMark settings
@@ -7,6 +8,14 @@ const md = new MarkdownIt({
   breaks: true, // Convert \n to <br>
   linkify: true, // Auto-convert URLs to links
   typographer: true, // Enable smart quotes and other typographic replacements
+})
+
+// Configure links to open in new tab
+md.use(markdownItLinkAttributes, {
+  attrs: {
+    target: '_blank',
+    rel: 'noopener noreferrer'
+  }
 })
 
 /**
