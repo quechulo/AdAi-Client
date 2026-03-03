@@ -33,6 +33,12 @@ const router = createRouter({
       component: () => import('@/views/ViewAdView.vue'),
       props: (route) => ({ id: String(route.params.id) }),
     },
+    {
+      path: '/view-ad/demo/:id?',
+      name: 'view-ad-demo',
+      component: () => import('@/views/DemoViewAdView.vue'),
+      props: (route) => ({ id: route.params.id ? String(route.params.id) : undefined }),
+    },
   ],
 })
 
