@@ -110,7 +110,7 @@ async function sendMessage(): Promise<void> {
       if (err.isTimeout) {
         errorMessage.parts[0] += '\n\nThe request timed out. The server may be overloaded or the request is taking too long.'
       } else if (err.isNetworkError) {
-        errorMessage.parts[0] += '\n\nPlease ensure:\n• The backend server is running on http://localhost:8000\n• Your network connection is stable'
+        errorMessage.parts[0] += '\n\nPlease ensure:\n• The backend server is running\n and your network connection is stable'
       }
       
       chatStore.addMessage(errorMessage)
