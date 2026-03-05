@@ -1,7 +1,7 @@
 import axios, { type AxiosError, type AxiosInstance } from 'axios'
 import type { ChatMessage } from '@/types/chat'
 
-const BASE_URL = 'http://localhost:8000/api/v1'
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const DEFAULT_TIMEOUT = 50000 // 50 seconds
 const MAX_RETRIES = 2
 const RETRY_DELAY = 1000 // 1 second
