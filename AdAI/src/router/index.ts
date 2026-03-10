@@ -5,6 +5,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'home',
+      component: () => import('@/views/LandingView.vue'),
+      props: { mode: null },
+    },
+    {
+      path: '/chat',
       name: 'chat',
       component: () => import('@/views/ChatView.vue'),
       props: { mode: null },

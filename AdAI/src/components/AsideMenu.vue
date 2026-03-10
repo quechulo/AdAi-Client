@@ -39,6 +39,11 @@ function handleStartNewChat(): void {
       </div>
 
       <RouterLink class="link" active-class="active" to="/">
+        <span class="icon" aria-hidden="true">🎯</span>
+        <span v-if="!collapsed" class="label">Quick Start</span>
+      </RouterLink>
+
+      <RouterLink class="link" active-class="active" to="/chat">
         <span class="icon" aria-hidden="true">💬</span>
         <span v-if="!collapsed" class="label">Chat</span>
       </RouterLink>
