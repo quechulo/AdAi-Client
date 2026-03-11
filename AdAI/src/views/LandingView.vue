@@ -9,6 +9,10 @@ const lang = ref<'pl' | 'en'>('pl');
     <header class="header">
         <h1 v-if="lang==='en'">Welcome to AdAI</h1>
         <h1 v-else>Witaj w AdAI</h1>
+        <div class="lang-toggle">
+            <button :class="['lang-btn', { active: lang === 'pl' }]" @click="lang = 'pl'">🇵🇱 PL</button>
+            <button :class="['lang-btn', { active: lang === 'en' }]" @click="lang = 'en'">🇬🇧 EN</button>
+        </div>
     </header>
 
     <div v-if="lang==='en'" class="scroll">
@@ -50,3 +54,36 @@ const lang = ref<'pl' | 'en'>('pl');
 
   
 </template>
+
+<style scoped>
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 36px;
+}
+
+.lang-toggle {
+    display: flex;
+    gap: 4px;
+}
+
+.lang-btn {
+    padding: 4px 12px;
+    border: 1px solid currentColor;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.lang-btn.active {
+    opacity: 1;
+}
+
+.lang-btn:hover {
+    opacity: 0.8;
+}
+</style>
