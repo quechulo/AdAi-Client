@@ -31,6 +31,7 @@ body {
   padding: 0;
   height: 100%;
   overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #app {
