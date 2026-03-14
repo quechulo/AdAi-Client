@@ -21,7 +21,7 @@ const lang = ref<'pl' | 'en'>('pl');
         <p>I encourage you to fill first form about your experience</p>
     </div>
     <div v-else class="scroll">
-        <h3>Dzięki za odwiedzenie serwisu AdAI!</h3>
+        <h3>Dzięki za odwiedzenie AdAI!</h3>
         <p>Ta strona przedstawia możliwości konwersacyjnego AI, które potrafi dostarczać reklamy z zewnętrznych źródeł.</p>
         <p>Na początku zachęcam Cię do wypełnienia pierwszego formularza o Twoim bieżącym doświadczeniu z podobnymi serwisami oferującymi konwersacyjne AI.</p>
 
@@ -29,7 +29,7 @@ const lang = ref<'pl' | 'en'>('pl');
         <p>Po lewej stronie znajdziesz sześć zakładek, które przedstawiają odpowiednio:</p>
         <ul>
             <li>Quick Start - tutaj właśnie jesteś!</li>
-            <li>Chat - tutaj możesz porozmawiać z chatbotem. Zadać mu pytanie, a on postara się ci odpowiedzieć. Model dostępny na tej zakładce nie ma świadomości o żadnych reklamach. Nadal może dostarczać informacje o produktach i usługach, ale mechanizm jego odpowiedzi nie jest nastawiony na ich przedstawianie.</li>
+            <li>Chat - tutaj możesz porozmawiać z chatbotem. Zadaj mu pytanie, a on postara się odpowiedzieć. Model dostępny na tej zakładce nie ma świadomości o żadnych reklamach. Nadal może dostarczać informacje o produktach i usługach, ale mechanizm jego odpowiedzi nie jest nastawiony na ich przedstawianie.</li>
             <li>View Ad (demo) - tutaj możesz zobaczyć przykładowe reklamy. Albo nawigując strzałkami prawo/lewo, albo wpisując dowolny numer od 1 do 1200 w polu na górze.</li>
             <li>Następne trzy zakładki (Chat with RAG/Chat with MCP/Chat with AGENT) przedstawiają różne podejścia do integracji konwersacyjnego AI z reklamami.</li>
         </ul>
@@ -39,7 +39,6 @@ const lang = ref<'pl' | 'en'>('pl');
 
         <ul>
             <li><strong>Sprzęt outdoorowy, kempingowy i overlanding:</strong> Możesz zapytać o namioty 4-sezonowe, które wytrzymają silne wiatry , sprzęt do filtrowania wody na szlaku , czy akcesoria do spania na dachu samochodu (namioty dachowe).</li>
-            <li><strong>Rowery, dojazdy i sporty wyczynowe:</strong> Zdobędziesz rekomendacje dotyczące karbonowych rowerów szosowych , odzieży na mroźne dni  czy narzędzi do naprawy przebitej opony.</li>
             <li><strong>Sporty wodne i zimowe:</strong> Pytaj o grubość pianki do surfingu zimą , sprzęt do nurkowania  lub narty radzące sobie w każdych warunkach.</li>
             <li><strong>Elektronika, Laptopy i Gaming:</strong> Szukasz lekkiego laptopa z pojemną baterią do podróży? A może interesuje Cię potężny komputer do gier w rozdzielczości 4K  lub smartwatch z zaawansowanymi funkcjami zdrowotnymi, takimi jak wykrywanie bezdechu sennego? System potrafi doradzić w każdej z tych kwestii.</li>
             <li><strong>Obuwie (Sneakersy i buty sportowe):</strong> Zapytaj o klasyczne buty koszykarskie z lat 80. , ekologiczne sneakersy wykonane z wegańskiej skóry  lub buty do biegania.</li>
