@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const lang = ref<'pl' | 'en'>('pl');
+const startChattingButtonText = computed(() => lang.value === 'en' ? 'Start Chatting!' : 'Zacznij rozmowę!');
 </script>
 
 <template>
@@ -16,12 +17,35 @@ const lang = ref<'pl' | 'en'>('pl');
     </header>
 
     <div v-if="lang==='en'" class="scroll">
-        <p>Thank you for coming to AdAI!</p>
-        <p>This website tries to explore posibilities of conversational AI that is able to provide ads from external sources.</p>
-        <p>I encourage you to fill first form about your experience</p>
+        <h2>Thanks for checking out AdAI!</h2>
+        <p>This website showcases what conversational AI can do when it is connected to ads from external sources.</p>
+        <p>To begin, please fill out the first short form about your current experience with similar conversational AI services.</p>
+
+        <h2>What does this website offer?</h2>
+        <p>On the left, you will find six tabs:</p>
+        <ul>
+            <li>Quick Start - this is where you are now.</li>
+            <li>Chat - chat with the chatbot, ask questions, and get answers. The model in this tab has no awareness of ads. It can still provide information about products and services, but its responses are not designed to promote them.</li>
+            <li>View Ad (demo) - browse sample ads either with the left/right arrows or by entering any number from 1 to 1200 in the field at the top.</li>
+            <li>The next three tabs (Chat with RAG / Chat with MCP / Chat with AGENT) present different ways of integrating conversational AI with advertising.</li>
+        </ul>
+
+        <h2>Not sure what to ask?</h2>
+        <p>Below are example categories for which ads are prepared, but feel free to ask about anything beyond this list.</p>
+
+        <ul>
+            <li><strong>Outdoor, camping, and overlanding gear:</strong> Ask about 4-season tents that can handle strong winds, trail water filtration equipment, or rooftop sleeping accessories (rooftop tents).</li>
+            <li><strong>Water and winter sports:</strong> You can ask about winter surfing wetsuit thickness, scuba diving gear, or skis that perform well in all conditions.</li>
+            <li><strong>Electronics, laptops, and gaming:</strong> Looking for a lightweight travel laptop with long battery life? Or maybe a powerful 4K gaming machine, or a smartwatch with advanced health features such as sleep apnea detection? The system can guide you in all of these areas.</li>
+            <li><strong>Footwear (sneakers and athletic shoes):</strong> Ask about classic 1980s basketball shoes, eco-friendly vegan leather sneakers, or running shoes.</li>
+            <li><strong>Home equipment (smart home, TV/audio, and appliances):</strong> The chatbot can suggest smart refrigerators, robot vacuums, or TVs that are perfect for movie nights.</li>
+            <li><strong>Real estate and investment:</strong> Try asking about luxury apartments in Warsaw (for example in Mokotów or Śródmieście), or rental apartments in the Tri-City area.</li>
+            <li><strong>Travel and hotels:</strong> Ask about luxury honeymoon hotels in Europe, historic stays in the US, or useful accessories that make long international flights more comfortable.</li>
+            <li><strong>Lifestyle, work, and entertainment:</strong> The system can help you choose gear for organizing a small apartment, accessories for remote work while traveling, or must-have gadgets for a music festival.</li>
+        </ul>
     </div>
     <div v-else class="scroll">
-        <h3>Dzięki za odwiedzenie AdAI!</h3>
+        <h2>Dzięki za odwiedzenie AdAI!</h2>
         <p>Ta strona przedstawia możliwości konwersacyjnego AI, które potrafi dostarczać reklamy z zewnętrznych źródeł.</p>
         <p>Na początku zachęcam Cię do wypełnienia pierwszego formularza o Twoim bieżącym doświadczeniu z podobnymi serwisami oferującymi konwersacyjne AI.</p>
 
@@ -48,18 +72,35 @@ const lang = ref<'pl' | 'en'>('pl');
             <li><strong>Styl życia, praca i rozrywka:</strong> System pomoże Ci dobrać sprzęt ułatwiający organizację małego mieszkania, akcesoria do pracy zdalnej w podróży czy najważniejsze gadżety na festiwal muzyczny.</li>
         </ul>
     </div>
-    <router-link to="/chat" class="start-chat-button">Start Chatting</router-link>
+    <div class="glossy">
+        <router-link to="/chat" class="start-chat-button">{{ startChattingButtonText }}</router-link>
+    </div>
     </div>
 
   
 </template>
 
 <style scoped>
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px 36px;
+}
+
+.scroll {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 0 36px 120px;
 }
 
 .lang-toggle {
@@ -84,5 +125,100 @@ const lang = ref<'pl' | 'en'>('pl');
 
 .lang-btn:hover {
     opacity: 0.8;
+}
+
+.glossy {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 36px;
+    border-radius: 0;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    overflow: hidden;
+}
+
+.glossy::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    height: 48%;
+    border-radius: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+.start-chat-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 10px 22px;
+    margin: 0;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    font-weight: 700;
+    overflow: hidden;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    animation: buttonPulse 1.8s ease-in-out infinite;
+}
+
+.start-chat-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.45) 50%, transparent 75%);
+    transform: translateX(-140%);
+    animation: buttonShine 2.4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.start-chat-button:hover {
+    transform: translateY(-1px) scale(1.02);
+    opacity: 0.95;
+}
+
+.start-chat-button:active {
+    transform: translateY(0) scale(0.99);
+}
+
+@keyframes buttonShine {
+    0%,
+    20% {
+        transform: translateX(-140%);
+    }
+    60%,
+    100% {
+        transform: translateX(140%);
+    }
+}
+
+@keyframes buttonPulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.015);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .start-chat-button,
+    .start-chat-button::after {
+        animation: none;
+    }
 }
 </style>
