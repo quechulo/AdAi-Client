@@ -25,6 +25,15 @@ watch(collapsed, (value) => {
 </template>
 
 <style>
+:root {
+  --color-accent: #9e3cb6;
+}
+
+a,
+a:visited {
+  color: var(--color-accent);
+}
+
 html,
 body {
   margin: 0;
