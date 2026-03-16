@@ -244,6 +244,10 @@ const startChattingButtonText = computed(() => lang.value === 'en' ? 'Start Chat
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+.glossy .quick-start-button {
+    background: rgba(255, 255, 255, 1);
+}
+
 .quick-start-button:active {
     color: inherit;
 }
