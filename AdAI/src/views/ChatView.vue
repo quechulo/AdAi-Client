@@ -161,17 +161,6 @@ async function sendMessage(): Promise<void> {
 </template>
 
 <style scoped>
-.page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 0;
-}
-
-.header {
-  padding: 20px 20px 10px;
-}
-
 .title {
   margin: 0;
   font-size: 20px;
@@ -184,16 +173,30 @@ async function sendMessage(): Promise<void> {
   font-size: 13px;
 }
 
-.scroll {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  padding: 10px 20px;
-}
 
 .composer {
   padding: 12px 20px 18px;
   background: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65));
   border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+</style>
+
+<style>
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.header {
+  padding: 20px 20px 10px;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px 20px;
 }
 </style>

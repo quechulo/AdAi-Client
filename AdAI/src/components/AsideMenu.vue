@@ -23,7 +23,7 @@ function handleStartNewChat(): void {
   <aside class="aside" :data-collapsed="collapsed">
     <div class="top">
       <div class="brand" :title="collapsed ? 'AdAI' : undefined">
-        <span class="logo">A</span>
+        <img src="/favicon.ico" alt="AdAI" class="logo-img" />
         <span v-if="!collapsed" class="name">AdAI</span>
       </div>
 
@@ -39,6 +39,11 @@ function handleStartNewChat(): void {
       </div>
 
       <RouterLink class="link" active-class="active" to="/">
+        <span class="icon" aria-hidden="true">🎯</span>
+        <span v-if="!collapsed" class="label">Quick Start</span>
+      </RouterLink>
+
+      <RouterLink class="link" active-class="active" to="/chat">
         <span class="icon" aria-hidden="true">💬</span>
         <span v-if="!collapsed" class="label">Chat</span>
       </RouterLink>
@@ -104,16 +109,11 @@ function handleStartNewChat(): void {
   min-width: 0;
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.logo-img {
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  background: #111827;
-  color: #fff;
-  font-weight: 700;
+  object-fit: contain;
 }
 
 .name {
