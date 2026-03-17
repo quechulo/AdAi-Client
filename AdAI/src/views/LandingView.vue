@@ -66,7 +66,7 @@ const startChattingButtonText = computed(() => lang.value === 'en' ? 'Start Chat
     <div v-else class="scroll">
         <h2>Dzięki za odwiedzenie AdAI!</h2>
         <p>Ta strona przedstawia możliwości konwersacyjnego AI, które potrafi dostarczać reklamy z zewnętrznych źródeł.</p>
-        <p>Na początku zachęcam Cię do wypełnienia pierwszego formularza o Twoim bieżącym doświadczeniu z podobnymi serwisami oferującymi konwersacyjne AI.<br><br>Po przetestowaniu strony będzie super jak podzielisz się swoimi doświadczeniami i wypełnisz drugi formularz.</p>
+        <p>Na początku zachęcam Cię do wypełnienia pierwszej ankiety o Twoim bieżącym doświadczeniu z podobnymi serwisami oferującymi konwersacyjne AI.<br><br>Po przetestowaniu strony będzie super jak podzielisz się swoimi doświadczeniami i wypełnisz drugą 😎</p>
         <div class="buttons-wrapper">
             <a class="quick-start-button" href="https://forms.gle/dhrScPAAx4LxvuyX7" target="_blank" rel="noopener noreferrer">
                 Pierwsza ankieta
