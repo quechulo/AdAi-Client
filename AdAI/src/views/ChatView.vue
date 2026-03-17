@@ -179,6 +179,26 @@ async function sendMessage(): Promise<void> {
   background: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65));
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 18px;
+  }
+
+  .composer {
+    padding: 10px 14px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .composer {
+    padding: 8px 10px 12px;
+  }
+}
 </style>
 
 <style>
@@ -198,5 +218,25 @@ async function sendMessage(): Promise<void> {
   min-height: 0;
   overflow: auto;
   padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 14px 14px 8px;
+  }
+
+  .scroll {
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 10px 6px;
+  }
+
+  .scroll {
+    padding: 6px 10px;
+  }
 }
 </style>

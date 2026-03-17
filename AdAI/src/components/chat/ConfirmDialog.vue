@@ -155,4 +155,31 @@ const emit = defineEmits<{
 .btn-negative:hover {
   background: #dc2626;
 }
+
+@media (max-width: 480px) {
+  .dialog {
+    width: 94%;
+  }
+
+  .dialog-header {
+    padding: 18px 16px 12px;
+  }
+
+  .dialog-body {
+    padding: 16px;
+  }
+
+  .dialog-footer {
+    padding: 12px 16px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+}
 </style>

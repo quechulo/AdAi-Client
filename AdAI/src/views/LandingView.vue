@@ -313,4 +313,56 @@ const startChattingButtonText = computed(() => lang.value === 'en' ? 'Start Chat
         animation: none;
     }
 }
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 20px;
+    }
+
+    .scroll {
+        padding: 0 20px 104px;
+    }
+
+    .glossy {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .lang-toggle {
+        width: 100%;
+    }
+
+    .lang-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .scroll {
+        padding: 0 12px 96px;
+    }
+
+    .buttons-wrapper {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .buttons-wrapper .quick-start-button {
+        width: 100%;
+    }
+
+    .glossy {
+        padding: 10px 12px;
+    }
+
+    .glossy .quick-start-button {
+        width: 100%;
+    }
+}
 </style>

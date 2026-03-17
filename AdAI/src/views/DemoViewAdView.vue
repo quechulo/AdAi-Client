@@ -202,7 +202,10 @@ onBeforeUnmount(() => {
 <style scoped>
 .page {
   height: 100%;
-  overflow: auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   padding: 20px;
 }
 
@@ -543,6 +546,65 @@ onBeforeUnmount(() => {
   
   .navButton.right {
     right: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .inputGroup {
+    flex-wrap: wrap;
+    justify-content: stretch;
+    gap: 8px;
+  }
+
+  .inputLabel {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .idInput {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .goButton {
+    min-width: 72px;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 14px;
+  }
+
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navButton.left {
+    left: 6px;
+  }
+
+  .navButton.right {
+    right: 6px;
   }
 }
 </style>

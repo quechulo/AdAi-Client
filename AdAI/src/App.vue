@@ -6,6 +6,11 @@ const collapsed = ref(false)
 
 onMounted(() => {
   const saved = localStorage.getItem('adai.aside.collapsed')
+  if (saved === null) {
+    collapsed.value = window.matchMedia('(max-width: 768px)').matches
+    return
+  }
+
   collapsed.value = saved === 'true'
 })
 
@@ -58,6 +63,7 @@ body {
 .main {
   flex: 1;
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;

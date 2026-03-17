@@ -83,6 +83,8 @@ defineProps<{
 /* Markdown styles */
 .text.markdown {
   white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .text.markdown :first-child {
@@ -129,6 +131,7 @@ defineProps<{
   border-radius: 4px;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
   font-size: 0.9em;
+  word-break: break-all;
 }
 
 .text.markdown pre {
@@ -170,6 +173,9 @@ defineProps<{
 .text.markdown table {
   border-collapse: collapse;
   width: 100%;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
   margin: 0.8em 0;
 }
 

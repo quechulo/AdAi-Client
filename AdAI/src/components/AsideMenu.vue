@@ -202,4 +202,35 @@ function handleStartNewChat(): void {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
 }
+
+@media (max-width: 480px) {
+  .aside {
+    --aside-width: 240px;
+    --aside-width-collapsed: 52px;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .aside[data-collapsed='true'] {
+    padding: 10px 8px;
+  }
+
+  .toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .link {
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .icon {
+    width: 20px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+}
 </style>
