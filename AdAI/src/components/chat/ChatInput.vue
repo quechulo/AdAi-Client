@@ -84,6 +84,7 @@ watch(
 
   font-size: 14px;
   outline: none;
+  font: inherit;
 }
 
 .input:focus {
@@ -94,6 +95,7 @@ watch(
 .send {
   height: 40px;
   padding: 0 14px;
+  font: inherit;
 
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.12);
