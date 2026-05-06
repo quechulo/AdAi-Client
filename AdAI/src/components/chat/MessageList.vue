@@ -55,7 +55,8 @@ defineProps<{
 }
 
 .bubble {
-  width: min(640px, 100%);
+  /* width: min(640px, 100%); */
+  width: 90%;
   padding: 12px;
   border-radius: 16px;
 
