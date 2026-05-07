@@ -77,7 +77,6 @@ watch(() => props.id, async (id, _, onCleanup) => {
   const current = controller
   onCleanup(() => current.abort())
 
-  // Only fetch if ID is provided
   if (!id) {
     isLoading.value = false
     return
@@ -86,7 +85,6 @@ watch(() => props.id, async (id, _, onCleanup) => {
   try {
     ad.value = await fetchAdById(id, current.signal)
     
-    // Fetch Pexels image based on keywords after ad is loaded
     if (ad.value) {
       const pexelsUrl = await fetchPexelsImage(ad.value.keywords, current.signal)
       imageUrl.value = pexelsUrl || ad.value.image_url
@@ -109,7 +107,7 @@ onBeforeUnmount(() => {
       <h1 class="title">Demo Ad Viewer</h1>
       <p class="subtitle" v-if="id">
         Currently viewing: <span class="mono">{{ id }}</span>
-        <span class="counter"> — Ad {{ currentIdNumber }} of {{ MAX_ADS }}</span>
+        <span class="counter"> (Ad {{ currentIdNumber }} of {{ MAX_ADS }})</span>
       </p>
       <p class="subtitle" v-else>No ad selected</p>
     </header>

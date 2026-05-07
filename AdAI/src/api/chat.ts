@@ -2,9 +2,9 @@ import axios, { type AxiosError, type AxiosInstance } from 'axios'
 import type { ChatMessage } from '@/types/chat'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
-const DEFAULT_TIMEOUT = 50000 // 50 seconds
+const DEFAULT_TIMEOUT = 50000
 const MAX_RETRIES = 2
-const RETRY_DELAY = 1000 // 1 second
+const RETRY_DELAY = 1000
 
 export interface ChatRequestBody {
   message: string
@@ -56,7 +56,6 @@ class ChatApiService {
       },
     })
 
-    // Response interceptor for standardized error handling
     this.client.interceptors.response.use(
       (response) => response,
       (error: AxiosError) => {
@@ -119,17 +118,14 @@ class ChatApiService {
       } catch (error) {
         lastError = error instanceof ChatApiError ? error : new ChatApiError('Unknown error')
 
-        // Don't retry on client errors (4xx) except for 429
         if (lastError.status && lastError.status >= 400 && lastError.status < 500 && lastError.status !== 429) {
           throw lastError
         }
 
-        // Don't retry if it's the last attempt
         if (attempt === retries) {
           throw lastError
         }
 
-        // Wait before retrying (exponential backoff)
         const delay = RETRY_DELAY * Math.pow(2, attempt)
         await new Promise((resolve) => setTimeout(resolve, delay))
       }
@@ -200,12 +196,10 @@ class ChatApiService {
     }
   }
 
-  // Allow customizing timeout for specific requests
   setRequestTimeout(timeout: number): void {
     this.client.defaults.timeout = timeout
   }
 
-  // Health check method
   async healthCheck(): Promise<boolean> {
     try {
       await this.client.get('/health', { timeout: 5000 })
@@ -215,7 +209,6 @@ class ChatApiService {
     }
   }
 
-  // Save chat history
   async saveChatHistory(
     history: ChatMessage[],
     mode: 'rag' | 'mcp' | 'agent' | 'basic',
@@ -233,5 +226,4 @@ class ChatApiService {
   }
 }
 
-// Export a singleton instance
 export const chatApi = new ChatApiService()

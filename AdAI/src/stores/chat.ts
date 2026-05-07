@@ -28,12 +28,10 @@ export const useChatStore = defineStore('chat', () => {
     helpful: boolean,
   ): Promise<void> {
     try {
-      // Save chat history before clearing
       if (messages.value.length > 0) {
         await chatApi.saveChatHistory(messages.value, mode, helpful)
       }
       
-      // Clear messages after successful save
       messages.value = []
       closeNewChatDialog()
     } catch (error) {

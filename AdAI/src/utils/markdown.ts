@@ -2,15 +2,13 @@ import MarkdownIt from 'markdown-it'
 import markdownItLinkAttributes from 'markdown-it-link-attributes'
 import DOMPurify from 'dompurify'
 
-// Configure markdown-it with basic CommonMark settings
 const md = new MarkdownIt({
-  html: false, // Disable HTML tags in source for security
-  breaks: true, // Convert \n to <br>
-  linkify: true, // Auto-convert URLs to links
-  typographer: true, // Enable smart quotes and other typographic replacements
+  html: false,
+  breaks: true,
+  linkify: true,
+  typographer: true,
 })
 
-// Configure links to open in new tab
 md.use(markdownItLinkAttributes, {
   attrs: {
     target: '_blank',
@@ -24,10 +22,8 @@ md.use(markdownItLinkAttributes, {
  * @returns Sanitized HTML string safe for v-html
  */
 export function renderMarkdown(markdown: string): string {
-  // First, render markdown to HTML
   const rawHtml = md.render(markdown)
   
-  // Then sanitize the HTML with DOMPurify
   const cleanHtml = DOMPurify.sanitize(rawHtml, {
     ALLOWED_TAGS: [
       'p', 'br', 'strong', 'em', 'u', 's', 'code', 'pre',

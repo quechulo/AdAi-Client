@@ -12,7 +12,7 @@ defineProps<{
 <template>
   <div class="list" role="log" aria-live="polite">
     <div v-if="messages.length === 0" class="empty">
-      Start a conversation — your messages appear here.
+      Start a conversation, your messages appear here.
     </div>
 
     <div v-for="(m, idx) in messages" :key="`${idx}-${m.role}`" class="row" :data-role="m.role">
