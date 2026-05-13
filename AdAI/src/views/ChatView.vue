@@ -18,10 +18,8 @@ const isSavingHistory = ref(false)
 
 const scrollEl = ref<HTMLDivElement | null>(null)
 
-// Use computed for messages to maintain reactivity with the store
 const messages = computed(() => chatStore.messages)
 
-// Reset messages when mode changes (switching between chat types)
 watch(() => props.mode, () => {
   chatStore.setMessages([])
 })
@@ -35,12 +33,7 @@ function scrollToBottom(): void {
 async function handleConfirm(positive: boolean = false): Promise<void> {
   isSavingHistory.value = true
   try {
-    let mode: 'rag' | 'mcp' | 'agent' | 'basic'
-    if (props.mode === null) {
-      mode = 'basic'
-    } else {
-      mode = props.mode
-    }
+    const mode = props.mode ?? 'basic'
     await chatStore.startNewChat(mode, positive)
     console.log('Starting new chat with feedback:', positive, 'mode: ', mode)
   } catch (err) {
@@ -60,7 +53,6 @@ async function sendMessage(): Promise<void> {
   const content = draft.value.trim()
   if (!content || isModelGenerating.value) return
 
-  // Clear any previous errors
   error.value = null
 
   const userMessage: ChatMessage = {
@@ -78,10 +70,7 @@ async function sendMessage(): Promise<void> {
   await nextTick()
   scrollToBottom()
   try {
-    // Get message history (excluding the current user message)
     const history = messages.value.slice(0, -1)
-    
-    // Send the request based on the mode
     const result = await chatApi.sendChatMessage(content, history, props.mode)
 
     const { response, generation_time, used_tokens } = result
@@ -95,13 +84,11 @@ async function sendMessage(): Promise<void> {
 
     chatStore.addMessage(modelResponseMessage)
   } catch (err) {
-    // Handle errors gracefully
     console.error('Chat error:', err)
     
     if (err instanceof ChatApiError) {
       error.value = err.message
       
-      // Add error message to chat
       const errorMessage: ChatMessage = {
         role: 'assistant',
         parts: [`❌ Error: ${err.message}`],
@@ -115,7 +102,6 @@ async function sendMessage(): Promise<void> {
       
       chatStore.addMessage(errorMessage)
     } else {
-      // Handle non-ChatApiError errors
       const errorMsg = err instanceof Error ? err.message : String(err)
       error.value = errorMsg
       const errorMessage: ChatMessage = {
@@ -179,6 +165,26 @@ async function sendMessage(): Promise<void> {
   background: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65));
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 18px;
+  }
+
+  .composer {
+    padding: 10px 14px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .composer {
+    padding: 8px 10px 12px;
+  }
+}
 </style>
 
 <style>
@@ -198,5 +204,25 @@ async function sendMessage(): Promise<void> {
   min-height: 0;
   overflow: auto;
   padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 14px 14px 8px;
+  }
+
+  .scroll {
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 10px 6px;
+  }
+
+  .scroll {
+    padding: 6px 10px;
+  }
 }
 </style>

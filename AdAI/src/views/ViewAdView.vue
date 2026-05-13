@@ -289,4 +289,28 @@ onBeforeUnmount(() => {
 .chip.muted {
   opacity: 0.6;
 }
+
+@media (max-width: 640px) {
+  .page {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 14px;
+  }
+}
 </style>

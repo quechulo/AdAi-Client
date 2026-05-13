@@ -77,7 +77,6 @@ watch(() => props.id, async (id, _, onCleanup) => {
   const current = controller
   onCleanup(() => current.abort())
 
-  // Only fetch if ID is provided
   if (!id) {
     isLoading.value = false
     return
@@ -86,7 +85,6 @@ watch(() => props.id, async (id, _, onCleanup) => {
   try {
     ad.value = await fetchAdById(id, current.signal)
     
-    // Fetch Pexels image based on keywords after ad is loaded
     if (ad.value) {
       const pexelsUrl = await fetchPexelsImage(ad.value.keywords, current.signal)
       imageUrl.value = pexelsUrl || ad.value.image_url
@@ -109,7 +107,7 @@ onBeforeUnmount(() => {
       <h1 class="title">Demo Ad Viewer</h1>
       <p class="subtitle" v-if="id">
         Currently viewing: <span class="mono">{{ id }}</span>
-        <span class="counter"> — Ad {{ currentIdNumber }} of {{ MAX_ADS }}</span>
+        <span class="counter"> (Ad {{ currentIdNumber }} of {{ MAX_ADS }})</span>
       </p>
       <p class="subtitle" v-else>No ad selected</p>
     </header>
@@ -202,7 +200,10 @@ onBeforeUnmount(() => {
 <style scoped>
 .page {
   height: 100%;
-  overflow: auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   padding: 20px;
 }
 
@@ -543,6 +544,65 @@ onBeforeUnmount(() => {
   
   .navButton.right {
     right: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .inputGroup {
+    flex-wrap: wrap;
+    justify-content: stretch;
+    gap: 8px;
+  }
+
+  .inputLabel {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .idInput {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .goButton {
+    min-width: 72px;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 14px;
+  }
+
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navButton.left {
+    left: 6px;
+  }
+
+  .navButton.right {
+    right: 6px;
   }
 }
 </style>

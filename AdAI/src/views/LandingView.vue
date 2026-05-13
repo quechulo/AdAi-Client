@@ -66,7 +66,7 @@ const startChattingButtonText = computed(() => lang.value === 'en' ? 'Start Chat
     <div v-else class="scroll">
         <h2>Dzięki za odwiedzenie AdAI!</h2>
         <p>Ta strona przedstawia możliwości konwersacyjnego AI, które potrafi dostarczać reklamy z zewnętrznych źródeł.</p>
-        <p>Na początku zachęcam Cię do wypełnienia pierwszego formularza o Twoim bieżącym doświadczeniu z podobnymi serwisami oferującymi konwersacyjne AI.<br><br>Po przetestowaniu strony będzie super jak podzielisz się swoimi doświadczeniami i wypełnisz drugi formularz.</p>
+        <p>Na początku zachęcam Cię do wypełnienia pierwszej ankiety o Twoim bieżącym doświadczeniu z podobnymi serwisami oferującymi konwersacyjne AI.<br><br>Po przetestowaniu strony będzie super jak podzielisz się swoimi doświadczeniami i wypełnisz drugą 😎</p>
         <div class="buttons-wrapper">
             <a class="quick-start-button" href="https://forms.gle/dhrScPAAx4LxvuyX7" target="_blank" rel="noopener noreferrer">
                 Pierwsza ankieta
@@ -311,6 +311,58 @@ const startChattingButtonText = computed(() => lang.value === 'en' ? 'Start Chat
     .quick-start-button,
     .quick-start-button::after {
         animation: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 20px;
+    }
+
+    .scroll {
+        padding: 0 20px 104px;
+    }
+
+    .glossy {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .lang-toggle {
+        width: 100%;
+    }
+
+    .lang-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .scroll {
+        padding: 0 12px 96px;
+    }
+
+    .buttons-wrapper {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .buttons-wrapper .quick-start-button {
+        width: 100%;
+    }
+
+    .glossy {
+        padding: 10px 12px;
+    }
+
+    .glossy .quick-start-button {
+        width: 100%;
     }
 }
 </style>

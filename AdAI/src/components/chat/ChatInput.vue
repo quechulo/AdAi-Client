@@ -109,4 +109,35 @@ watch(
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+@media (max-width: 768px) {
+  .wrap {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .input,
+  .send {
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .input {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .send {
+    padding: 0 10px;
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
 </style>

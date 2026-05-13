@@ -12,7 +12,7 @@ defineProps<{
 <template>
   <div class="list" role="log" aria-live="polite">
     <div v-if="messages.length === 0" class="empty">
-      Start a conversation — your messages appear here.
+      Start a conversation, your messages appear here.
     </div>
 
     <div v-for="(m, idx) in messages" :key="`${idx}-${m.role}`" class="row" :data-role="m.role">
@@ -55,7 +55,8 @@ defineProps<{
 }
 
 .bubble {
-  width: min(640px, 100%);
+  /* width: min(640px, 100%); */
+  width: 90%;
   padding: 12px;
   border-radius: 16px;
 
@@ -83,6 +84,8 @@ defineProps<{
 /* Markdown styles */
 .text.markdown {
   white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .text.markdown :first-child {
@@ -129,6 +132,7 @@ defineProps<{
   border-radius: 4px;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
   font-size: 0.9em;
+  word-break: break-all;
 }
 
 .text.markdown pre {
@@ -170,6 +174,9 @@ defineProps<{
 .text.markdown table {
   border-collapse: collapse;
   width: 100%;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
   margin: 0.8em 0;
 }
 
